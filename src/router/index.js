@@ -11,7 +11,7 @@ const router = new Router({
     {
       path: '/',
       name: 'root',
-      redirect: '/records'
+      redirect: '/signin'
 
     },
     {

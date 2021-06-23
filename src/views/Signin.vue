@@ -9,12 +9,14 @@
           <h4 class="mb-3">Account Login</h4>
           <div class="form w-75">
             <input
-              id="email"
-              v-model="email"
+              id="account"
+              v-model="account"
               type="text"
               class="form-control mb-1"
-              placeholder="Email ..."
-              name="email"
+              placeholder="account ..."
+              autocomplete="username"
+              name="account"
+              required
             />
             <input
               id="password"
@@ -23,8 +25,16 @@
               class="form-control mb-3"
               placeholder="Password ..."
               name="password"
+              autocomplete="current-password"
+              required
             />
-            <button type="submit" class="btn btn-info">LOGIN</button>
+            <button
+              :disabled="isProcesscing"
+              type="submit"
+              class="btn btn-info"
+            >
+              LOGIN
+            </button>
           </div>
           <p class="mt-5 mb-3 text-muted text-right">&copy; YuCheng Huang</p>
         </form>
@@ -33,22 +43,50 @@
   </div>
 </template>
 <script>
+/* eslint-disable */
+import authorizationAPI from "./../apis/authorization";
+import { Toast } from "./../utils/helpers";
 export default {
   data() {
     return {
-      email: "",
+      account: "",
       password: "",
+      isProcesscing: false,
     };
   },
   methods: {
-    handleSubmit() {
-      const data = JSON.stringify({
-        email: this.email,
-        password: this.password,
-      });
+    async handleSubmit(e) {
+      try {
+        if (!this.account || !this.password) {
+          Toast.fire({
+            icon: "warning",
+            title: "請輸入帳號密碼",
+          });
+          return;
+        }
+        this.isProcesscing = true;
 
-      // TODO: 向後端驗證使用者登入資訊是否合法
-      console.log("data", data);
+        const response = await authorizationAPI.signIn({
+          account: this.account,
+          password: this.password,
+        });
+        console.log("response", response);
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        localStorage.setItem("token", data.token);
+        this.$router.push("/records");
+
+        // TODO: 向後端驗證使用者登入資訊是否合法
+      } catch (error) {
+        this.password = "";
+        this.isProcesscing = false;
+        Toast.fire({
+          icon: "warning",
+          title: "請輸入正確的帳號密碼",
+        });
+      }
     },
   },
 };
