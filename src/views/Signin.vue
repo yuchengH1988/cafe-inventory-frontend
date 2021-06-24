@@ -46,6 +46,7 @@
 /* eslint-disable */
 import authorizationAPI from "./../apis/authorization";
 import { Toast } from "./../utils/helpers";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -53,6 +54,9 @@ export default {
       password: "",
       isProcesscing: false,
     };
+  },
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
   },
   methods: {
     async handleSubmit(e) {
@@ -70,15 +74,14 @@ export default {
           account: this.account,
           password: this.password,
         });
-        console.log("response", response);
         const { data } = response;
         if (data.status !== "success") {
           throw new Error(data.message);
         }
         localStorage.setItem("token", data.token);
-        this.$router.push("/records");
+        this.$store.commit("setCurrentUser", data.user);
 
-        // TODO: 向後端驗證使用者登入資訊是否合法
+        this.$router.push("/records");
       } catch (error) {
         this.password = "";
         this.isProcesscing = false;

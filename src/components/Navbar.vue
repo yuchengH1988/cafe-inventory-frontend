@@ -10,10 +10,10 @@
     </div>
     <template v-if="isAuthenticated">
       <div class="sidebar-menu mt-3">
-        <router-link class="nav-link navbar-record" to="/">
+        <router-link class="nav-link navbar-record" to="/records">
           <i class="fas fa-folder-plus"></i>
         </router-link>
-        <router-link class="nav-link navbar-data" to="/">
+        <router-link class="nav-link navbar-data" to="/charts">
           <i class="fas fa-database"></i>
         </router-link>
       </div>
@@ -21,52 +21,28 @@
         <router-link class="nav-link navbar-user" to="/">
           <i class="far fa-user"></i>
         </router-link>
-        <router-link class="nav-link navbar-logout" to="/">
-          <button class="btn btn-light logout text-info">LOG OUT</button>
-        </router-link>
+        <button
+          type="button"
+          class="btn btn-light logout text-info mt-2"
+          @click="logout"
+        >
+          LOG <br />
+          OUT
+        </button>
       </div>
     </template>
   </nav>
 </template>
 <script>
-// ./src/components/Navbar.vue
-// seed data
-const dummyUser = {
-  currentUser: {
-    id: 1,
-    name: "管理者",
-    email: "root@example.com",
-    image: "https://i.pravatar.cc/300",
-    isAdmin: true,
-  },
-  isAuthenticated: true,
-};
-
+import { mapState } from "vuex";
 export default {
-  // Vue 會在沒有資料時使用此預設值
-  data() {
-    return {
-      currentUser: {
-        _id: -1,
-        name: "",
-        email: "",
-        image: "",
-        avatar: "",
-        isAdmin: false,
-      },
-      isAuthenticated: false,
-    };
-  },
-  created() {
-    this.fetchUser();
+  computed: {
+    ...mapState(["currentUser", "isAuthenticated"]),
   },
   methods: {
-    fetchUser() {
-      this.currentUser = {
-        ...this.currentUser,
-        ...dummyUser.currentUser,
-      };
-      this.isAuthenticated = dummyUser.isAuthenticated;
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/signin");
     },
   },
 };
@@ -97,8 +73,8 @@ export default {
   font-size: 32px;
 }
 .logout {
-  font-size: 5px;
+  font-size: 14px;
   font-weight: 700;
-  padding: 4px;
+  padding: 4px 10px;
 }
 </style>
