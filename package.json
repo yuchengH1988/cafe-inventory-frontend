@@ -11,6 +11,8 @@
     "axios": "^0.21.1",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.6.5",
+    "install": "^0.13.0",
+    "moment": "^2.29.1",
     "sweetalert2": "^11.0.18",
     "vue": "^2.6.11",
     "vue-router": "^3.5.2",

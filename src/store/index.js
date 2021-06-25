@@ -39,8 +39,8 @@ export default new Vuex.Store({
         if (statusText !== 'OK') {
           throw new Error(statusText)
         }
-        const { id, name, account, email, avatar, isAdmin } = data
-        commit('setCurrentUser', { id, name, account, email, avatar, isAdmin })
+        const { _id, name, account, email, avatar, isAdmin } = data
+        commit('setCurrentUser', { _id, name, account, email, avatar, isAdmin })
         return true
       } catch (error) {
         console.error('can not fetch user information')

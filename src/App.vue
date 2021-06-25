@@ -31,7 +31,7 @@ export default {
 
 router-view {
   flex: 1;
-  padding: 30px;
+  padding: 20px;
   max-height: 100vh;
   overflow-y: auto;
 }
