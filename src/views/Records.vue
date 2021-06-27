@@ -169,7 +169,6 @@ export default {
   methods: {
     async fetchData() {
       try {
-        // this.isLoading = true
         const productsRes = await recordsAPI.getProducts();
         this.products = productsRes.data.products;
         const ingredientsRes = await recordsAPI.getIngredients();

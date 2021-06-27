@@ -18,7 +18,7 @@
         </router-link>
       </div>
       <div class="sidebar-end mt-auto">
-        <router-link class="nav-link navbar-user" to="/">
+        <router-link class="nav-link navbar-user" to="/user">
           <i class="far fa-user"></i>
         </router-link>
         <button

@@ -43,6 +43,11 @@ const router = new Router({
       component: () => import('../views/Charts.vue')
     },
     {
+      path: '/user',
+      name: 'user',
+      component: () => import('../views/User.vue')
+    },
+    {
       path: '*',
       name: 'not-found',
       component: NotFound,

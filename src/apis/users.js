@@ -4,11 +4,7 @@ export default {
   getCurrentUser() {
     return apiHelper.get(`/users/current`)
   },
-  getUser({ userId }) {
-    return apiHelper.get(`/users/${userId}`)
-  },
-
-
-
-
+  updateUser({ formData }) {
+    return apiHelper.put('/users', formData)
+  }
 }

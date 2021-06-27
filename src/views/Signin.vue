@@ -43,7 +43,6 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
 import authorizationAPI from "./../apis/authorization";
 import { Toast } from "./../utils/helpers";
 import { mapState } from "vuex";
@@ -59,7 +58,7 @@ export default {
     ...mapState(["currentUser", "isAuthenticated"]),
   },
   methods: {
-    async handleSubmit(e) {
+    async handleSubmit() {
       try {
         if (!this.account || !this.password) {
           Toast.fire({
