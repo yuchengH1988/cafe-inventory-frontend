@@ -18,6 +18,10 @@ export default {
   },
   deleteRecord({ dateId }) {
     return apiHelper.delete(`/records/${dateId}`)
-  }
+  },
+  getRecords({ year, month, ingredientId }) {
+    const searchParams = new URLSearchParams({ year, month, ingredientId })
+    return apiHelper.get(`/records?${searchParams.toString()}`)
+  },
 
 }

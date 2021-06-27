@@ -167,7 +167,7 @@ export default {
     ...mapState(["currentUser"]),
   },
   methods: {
-    async fetchDatas() {
+    async fetchData() {
       try {
         // this.isLoading = true
         const productsRes = await recordsAPI.getProducts();
@@ -308,7 +308,7 @@ export default {
     },
   },
   created() {
-    this.fetchDatas();
+    this.fetchData();
   },
   filters: {
     timeFormate(timeId) {
