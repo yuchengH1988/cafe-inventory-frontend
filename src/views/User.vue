@@ -128,8 +128,11 @@ export default {
   data() {
     return {
       name: "",
-      avatar: "",
       email: "",
+      avatar: "",
+      temp_name: "",
+      temp_avatar: "",
+      temp_email: "",
       account: "",
       password: "",
       checkPassword: "",
@@ -160,7 +163,17 @@ export default {
     },
     changeStatus() {
       this.isEditing = this.isEditing ? false : true;
-      this.fetchUser();
+      if (this.isEditing === true) {
+        this.temp_name = this.name;
+        this.temp_avatar = this.avatar;
+        this.temp_email = this.email;
+      } else {
+        this.name = this.temp_name;
+        this.avatar = this.temp_avatar;
+        this.email = this.temp_email;
+        this.password = "";
+        this.checkPassword = "";
+      }
     },
     async updateUser(e) {
       try {
@@ -191,10 +204,11 @@ export default {
         const { data } = await usersAPI.updateUser({
           formData,
         });
-        console.log("data", data);
         if (data.status !== "success") {
           throw new Error(data.message);
         }
+        this.password = "";
+        this.checkPassword = "";
         this.isEditing = false;
         this.isProcessing = false;
       } catch (error) {
