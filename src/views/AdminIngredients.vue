@@ -4,7 +4,7 @@
       <AdminTab />
       <DataTab />
     </div>
-    <div class="ingredients-main mt-3 d-flex">
+    <div class="ingredients-main mt-3 d-flex align-items-start">
       <div class="ingredients-wrapper card">
         <span class="ingredient-title">Ingredient List</span>
         <div
@@ -151,6 +151,17 @@ export default {
     },
     async updateIngredient() {
       try {
+        if (
+          !this.editIngredient.name ||
+          !this.editIngredient.unit ||
+          !this.editIngredient.unitName
+        ) {
+          Toast.fire({
+            icon: "error",
+            title: "請填上所有欄位。",
+          });
+          return;
+        }
         this.isProcessing = true;
         let response = {};
         if (this.editIngredient._id) {
@@ -239,7 +250,7 @@ export default {
   padding: 15px 10px;
   border: 2px solid rgb(23, 162, 184, 0.7);
   border-radius: 25px;
-  width: 30%;
+  width: 220px;
 }
 .form-title {
   text-align: center;
@@ -256,7 +267,7 @@ export default {
   padding: 15px 30px;
   background-color: rgb(23, 162, 184, 0.2);
   border-radius: 25px;
-  width: 40%;
+  width: 300px;
   height: 360px;
 }
 .ingredient-title {

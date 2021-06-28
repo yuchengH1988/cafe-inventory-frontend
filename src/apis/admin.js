@@ -11,6 +11,17 @@ export default {
     delete({ id }) {
       return apiHelper.delete(`/admin/ingredients/${id}`)
     }
+  },
+  products: {
+    update({ id, name, size, price }) {
+      return apiHelper.put(`/admin/products/${id}`, { name, size, price })
+    },
+    create({ name, size, price }) {
+      return apiHelper.post(`/admin/products`, { name, size, price })
+    },
+    delete({ id }) {
+      return apiHelper.delete(`/admin/products/${id}`)
+    }
   }
 
 }
