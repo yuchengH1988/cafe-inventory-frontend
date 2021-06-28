@@ -17,7 +17,7 @@
 </template>
 <style scoped>
 .link-wrapper {
-  background-color: rgba(23, 162, 184, 0.7);
+  background-color: rgba(23, 162, 184, 0.8);
   padding: 10px;
   width: 340px;
   height: 47px;
