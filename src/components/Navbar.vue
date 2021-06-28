@@ -12,14 +12,25 @@
       <div class="sidebar-menu mt-3">
         <router-link class="nav-link navbar-record" to="/records">
           <i class="fas fa-folder-plus"></i>
+          <span>稽核紀錄</span>
         </router-link>
         <router-link class="nav-link navbar-data" to="/charts">
           <i class="fas fa-database"></i>
+          <span>報表查詢</span>
         </router-link>
       </div>
       <div class="sidebar-end mt-auto">
+        <router-link
+          v-if="currentUser.isAdmin"
+          class="nav-link navbar-admin"
+          to="/admin/data"
+        >
+          <i class="fas fa-user-cog"></i>
+          <span>後台</span>
+        </router-link>
         <router-link class="nav-link navbar-user" to="/user">
           <i class="far fa-user"></i>
+          <span>使用者</span>
         </router-link>
         <button
           type="button"
@@ -64,6 +75,7 @@ export default {
 .nav-link {
   color: white;
   font-size: 30px;
+  position: relative;
 }
 .navbar-home {
   padding: 8px 11px;
@@ -72,6 +84,27 @@ export default {
 .nav-link:hover {
   font-size: 32px;
 }
+.nav-link span {
+  display: none;
+  font-size: 10px;
+  color: rgb(233, 233, 233);
+  font-weight: 800;
+}
+.nav-link:hover span {
+  display: block;
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  bottom: -7px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-link.active {
+  border: 1px solid white;
+  padding: 2px 11px;
+  border-radius: 25px;
+}
+
 .logout {
   font-size: 14px;
   font-weight: 700;

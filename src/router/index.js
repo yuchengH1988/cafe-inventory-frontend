@@ -14,9 +14,9 @@ const authorizeIsAdmin = (to, from, next) => {
     next('/404')
     return
   }
-
   next()
 }
+
 
 const router = new Router({
   linkExactActiveClass: 'active',
@@ -35,17 +35,17 @@ const router = new Router({
     {
       path: '/records',
       name: 'records',
-      component: Records
+      component: Records,
     },
     {
       path: '/charts',
       name: 'charts',
-      component: () => import('../views/Charts.vue')
+      component: () => import('../views/Charts.vue'),
     },
     {
       path: '/user',
       name: 'user',
-      component: () => import('../views/User.vue')
+      component: () => import('../views/User.vue'),
     },
     {
       path: '*',
@@ -56,6 +56,36 @@ const router = new Router({
       path: '/admin/users',
       name: 'admin-users',
       component: () => import('../views/AdminUers.vue'),
+      beforeEnter: authorizeIsAdmin
+    },
+    {
+      path: '/admin/data',
+      name: 'admin-data',
+      component: () => import('../views/AdminData.vue'),
+      beforeEnter: authorizeIsAdmin
+    },
+    {
+      path: '/admin/data/ingredients',
+      name: 'admin-ingredients',
+      component: () => import('../views/AdminIngredients.vue'),
+      beforeEnter: authorizeIsAdmin
+    },
+    {
+      path: '/admin/data/products',
+      name: 'admin-products',
+      component: () => import('../views/AdminProducts.vue'),
+      beforeEnter: authorizeIsAdmin
+    },
+    {
+      path: '/admin/data/composition',
+      name: 'admin-composition',
+      component: () => import('../views/AdminComposition.vue'),
+      beforeEnter: authorizeIsAdmin
+    },
+    {
+      path: '/admin/charts',
+      name: 'admin-charts',
+      component: () => import('../views/AdminCharts.vue'),
       beforeEnter: authorizeIsAdmin
     }
   ]
