@@ -22,6 +22,20 @@ export default {
     delete({ id }) {
       return apiHelper.delete(`/admin/products/${id}`)
     }
+  },
+  compositions: {
+    get() {
+      return apiHelper.get(`/admin/compositions`)
+    },
+    update({ id, quantity }) {
+      return apiHelper.put(`/admin/compositions/${id}`, { quantity })
+    },
+    create({ quantity, ingredientId, productId }) {
+      return apiHelper.post(`/admin/compositions`, { quantity, ingredientId, productId })
+    },
+    delete({ id }) {
+      return apiHelper.delete(`/admin/compositions/${id}`)
+    }
   }
 
 }

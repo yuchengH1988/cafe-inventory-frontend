@@ -4,99 +4,102 @@
       <AdminTab />
       <DataTab />
     </div>
-    <div class="ingredients-main mt-3 d-flex align-items-start">
-      <div class="ingredients-wrapper card">
-        <span class="ingredient-title">Ingredient List</span>
-        <div
-          v-for="ingredient in ingredients"
-          :key="ingredient.id"
-          class="ingredient-list d-flex align-items-center"
-        >
-          <span>{{ ingredient.name }}</span>
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <div class="ingredients-main mt-3 d-flex align-items-start">
+        <div class="ingredients-wrapper">
+          <span class="ingredient-title">Ingredient List</span>
+          <div
+            v-for="ingredient in ingredients"
+            :key="ingredient.id"
+            class="ingredient-list d-flex align-items-center"
+          >
+            <span>{{ ingredient.name }}</span>
+            <button
+              type="button"
+              class="btn btn-info btn-sm ml-auto"
+              @click="editInput(ingredient._id)"
+            >
+              Edit
+            </button>
+          </div>
           <button
             type="button"
-            class="btn btn-info btn-sm ml-auto"
-            @click="editInput(ingredient._id)"
+            class="btn btn-info btn-sm mx-5 mt-3"
+            @click="
+              resetEditData();
+              editInput();
+            "
           >
-            Edit
+            New
           </button>
         </div>
-        <button
-          type="button"
-          class="btn btn-info btn-sm mx-5 mt-3"
-          @click="
-            resetEditData();
-            editInput();
-          "
-        >
-          New
-        </button>
-      </div>
-      <div v-if="isEditing" class="ingredient-form ml-5 card">
-        <span class="form-title mb-2">{{
-          editIngredient.name ? editIngredient.name : "New Ingredient"
-        }}</span>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">名稱</span>
-          <input
-            type="text"
-            class="form-control form-input"
-            v-model="editIngredient.name"
-          />
-        </div>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">基本單位</span>
-          <input
-            disabled
-            type="number"
-            class="form-control form-input"
-            value="1"
-          />
-        </div>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">基本單位名稱</span>
-          <input
-            type="text"
-            class="form-control form-input"
-            v-model="editIngredient.unitName"
-          />
-        </div>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">大單位</span>
-          <input
-            type="number"
-            class="form-control form-input"
-            v-model="editIngredient.unit2"
-          />
-        </div>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">大單位名稱</span>
-          <input
-            type="text"
-            class="form-control form-input"
-            v-model="editIngredient.unit2Name"
-          />
-        </div>
-        <div class="form-row-wrapper justify-content-between">
-          <button
-            :disabled="isProcessing"
-            class="btn btn-info"
-            @click="updateIngredient"
-          >
-            {{ isProcessing ? "Processing" : "Save" }}
-          </button>
-          <button @click="cancelEdit" class="btn btn-warning">Cancel</button>
-          <button
-            :disabled="isProcessing"
-            v-if="editIngredient._id"
-            @click="deleteIngredient"
-            class="btn btn-danger"
-          >
-            {{ isProcessing ? "Processing" : "Delete" }}
-          </button>
+        <div v-if="isEditing" class="ingredient-form ml-5 card">
+          <span class="form-title mb-2">{{
+            editIngredient.name ? editIngredient.name : "New Ingredient"
+          }}</span>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">名稱</span>
+            <input
+              type="text"
+              class="form-control form-input"
+              v-model="editIngredient.name"
+            />
+          </div>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">基本單位</span>
+            <input
+              disabled
+              type="number"
+              class="form-control form-input"
+              value="1"
+            />
+          </div>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">基本單位名稱</span>
+            <input
+              type="text"
+              class="form-control form-input"
+              v-model="editIngredient.unitName"
+            />
+          </div>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">大單位</span>
+            <input
+              type="number"
+              class="form-control form-input"
+              v-model="editIngredient.unit2"
+            />
+          </div>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">大單位名稱</span>
+            <input
+              type="text"
+              class="form-control form-input"
+              v-model="editIngredient.unit2Name"
+            />
+          </div>
+          <div class="form-row-wrapper justify-content-between">
+            <button
+              :disabled="isProcessing"
+              class="btn btn-info"
+              @click="updateIngredient"
+            >
+              {{ isProcessing ? "Processing" : "Save" }}
+            </button>
+            <button @click="cancelEdit" class="btn btn-warning">Cancel</button>
+            <button
+              :disabled="isProcessing"
+              v-if="editIngredient._id"
+              @click="deleteIngredient"
+              class="btn btn-danger"
+            >
+              {{ isProcessing ? "Processing" : "Delete" }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 <script>
@@ -105,6 +108,7 @@ import DataTab from "../components/DataTab.vue";
 import adminAPI from "../apis/admin";
 import recordsAPI from "../apis/records";
 import { Toast } from "../utils/helpers";
+import Spinner from "./../components/Spinner";
 export default {
   name: "Admin-Data",
   data() {
@@ -123,6 +127,7 @@ export default {
     };
   },
   components: {
+    Spinner,
     AdminTab,
     DataTab,
   },

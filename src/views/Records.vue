@@ -140,7 +140,6 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
 import recordsAPI from "./../apis/records";
 import { Toast } from "./../utils/helpers";
 import { mapState } from "vuex";
@@ -236,7 +235,6 @@ export default {
     async createRecord() {
       try {
         this.isProcessing = true;
-        const authorId = this.currentUser._id;
         const dateId = this.dateId;
         let status = 0;
 
@@ -259,7 +257,7 @@ export default {
             title: `在${dateId}成功新增${status}筆物料紀錄`,
           });
         } else {
-          throw new Error(data.message);
+          throw new Error();
         }
         this.dateChecker = true;
         this.isProcessing = false;
@@ -282,7 +280,7 @@ export default {
           });
           this.dateChecker = false;
         } else {
-          throw new Error(data.message);
+          throw new Error(response.data.message);
         }
       } catch (error) {
         this.isProcessing = false;

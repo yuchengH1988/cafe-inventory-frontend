@@ -4,86 +4,90 @@
       <AdminTab />
       <DataTab />
     </div>
-    <div class="products-main mt-3 d-flex align-items-start">
-      <div class="products-wrapper card">
-        <span class="product-title">Products List</span>
-        <div
-          v-for="product in products"
-          :key="product.id"
-          class="product-list d-flex align-items-center"
-        >
-          <span>{{ product.name }}</span>
+    <Spinner v-if="isLoading" />
+    <template v-else>
+      <div class="products-main mt-3 d-flex align-items-start">
+        <div class="products-wrapper card">
+          <span class="product-title">Products List</span>
+          <div
+            v-for="product in products"
+            :key="product.id"
+            class="product-list d-flex align-items-center"
+          >
+            <span>{{ product.name }}</span>
+            <button
+              type="button"
+              class="btn btn-info btn-sm ml-auto"
+              @click="editInput(product._id)"
+            >
+              Edit
+            </button>
+          </div>
           <button
             type="button"
-            class="btn btn-info btn-sm ml-auto"
-            @click="editInput(product._id)"
+            class="btn btn-info btn-sm mx-5 mt-3"
+            @click="
+              resetEditData();
+              editInput();
+            "
           >
-            Edit
+            New
           </button>
         </div>
-        <button
-          type="button"
-          class="btn btn-info btn-sm mx-5 mt-3"
-          @click="
-            resetEditData();
-            editInput();
-          "
-        >
-          New
-        </button>
-      </div>
-      <div v-if="isEditing" class="product-form ml-5 card">
-        <span class="form-title mb-2">{{
-          editProduct.name ? editProduct.name : "New Ingredient"
-        }}</span>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">Name</span>
-          <input
-            type="text"
-            class="form-control form-input"
-            v-model="editProduct.name"
-          />
-        </div>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">Size</span>
-          <input
-            type="text"
-            class="form-control form-input"
-            v-model="editProduct.size"
-          />
-        </div>
-        <div class="form-row-wrapper">
-          <span class="form-key text-center">Price</span>
-          <input
-            type="number"
-            class="form-control form-input"
-            v-model="editProduct.price"
-          />
-        </div>
-        <div class="form-row-wrapper justify-content-between">
-          <button
-            :disabled="isProcessing"
-            class="btn btn-info"
-            @click="updateProduct"
-          >
-            {{ isProcessing ? "Processing" : "Save" }}
-          </button>
-          <button @click="cancelEdit" class="btn btn-warning">Cancel</button>
-          <button
-            :disabled="isProcessing"
-            v-if="editProduct._id"
-            @click="deleteProduct"
-            class="btn btn-danger"
-          >
-            {{ isProcessing ? "Processing" : "Delete" }}
-          </button>
+        <div v-if="isEditing" class="product-form ml-5 card">
+          <span class="form-title mb-2">{{
+            editProduct.name ? editProduct.name : "New Ingredient"
+          }}</span>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">Name</span>
+            <input
+              type="text"
+              class="form-control form-input"
+              v-model="editProduct.name"
+            />
+          </div>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">Size</span>
+            <input
+              type="text"
+              class="form-control form-input"
+              v-model="editProduct.size"
+            />
+          </div>
+          <div class="form-row-wrapper">
+            <span class="form-key text-center">Price</span>
+            <input
+              type="number"
+              class="form-control form-input"
+              v-model="editProduct.price"
+            />
+          </div>
+          <div class="form-row-wrapper justify-content-between">
+            <button
+              :disabled="isProcessing"
+              class="btn btn-info"
+              @click="updateProduct"
+            >
+              {{ isProcessing ? "Processing" : "Save" }}
+            </button>
+            <button @click="cancelEdit" class="btn btn-warning">Cancel</button>
+            <button
+              :disabled="isProcessing"
+              v-if="editProduct._id"
+              @click="deleteProduct"
+              class="btn btn-danger"
+            >
+              {{ isProcessing ? "Processing" : "Delete" }}
+            </button>
+          </div>
         </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 <script>
 import AdminTab from "../components/AdminTab.vue";
+import Spinner from "./../components/Spinner";
 import DataTab from "../components/DataTab.vue";
 import adminAPI from "../apis/admin";
 import recordsAPI from "../apis/records";
@@ -104,6 +108,7 @@ export default {
     };
   },
   components: {
+    Spinner,
     AdminTab,
     DataTab,
   },
