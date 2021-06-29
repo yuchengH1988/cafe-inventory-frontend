@@ -12,7 +12,6 @@
           v-model="month"
           @change="fetchData"
         >
-          <option value="" selected>月份</option>
           <option v-for="m in months" :key="m.value" :value="m.value">
             {{ m.name }}
           </option>
@@ -99,7 +98,7 @@ export default {
       ingredients: [],
       ingredient: {},
       isLoading: true,
-      year: "2021",
+      year: "",
       month: "",
       years: [],
       months: [],
@@ -115,6 +114,19 @@ export default {
     this.year = moment().format("YYYY");
     await this.fetchIngredients();
     await this.fetchData();
+    this.years = [
+      moment().format("YYYY"),
+      moment().add(-1, "y").format("YYYY"),
+    ];
+    for (let i = 1; i <= 12; i++) {
+      let m = i;
+      if (i < 10) {
+        m = "0" + i;
+      } else {
+        m = m.toString();
+      }
+      this.months.push({ value: m, name: i + "月" });
+    }
   },
   methods: {
     async fetchData() {
@@ -131,8 +143,6 @@ export default {
           month: this.month,
           ingredientId: this.ingredientId,
         });
-        this.months = data.months;
-        this.years = data.years;
         this.records = data.records;
         //製作Lables
         this.createLabels();
