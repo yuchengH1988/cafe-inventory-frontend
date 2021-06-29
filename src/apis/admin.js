@@ -44,8 +44,14 @@ export default {
   },
   users: {
     get() {
-      return apiHelper(`/admin/users`)
-    }
+      return apiHelper.get(`/admin/users`)
+    },
+    toggleAdmin({ id }) {
+      return apiHelper.put(`/admin/users/${id}`)
+    },
+    delete({ id }) {
+      return apiHelper.delete(`/admin/users/${id}`)
+    },
   }
 
 }

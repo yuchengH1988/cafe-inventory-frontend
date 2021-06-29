@@ -55,7 +55,7 @@ const router = new Router({
     {
       path: '/admin/users',
       name: 'admin-users',
-      component: () => import('../views/AdminUers.vue'),
+      component: () => import('../views/AdminUsers.vue'),
       beforeEnter: authorizeIsAdmin
     },
     {
