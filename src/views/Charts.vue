@@ -82,13 +82,11 @@
   </div>
 </template>
 <script>
-/* eslint-disable */
 import recordsAPI from "./../apis/records";
 import { Toast } from "./../utils/helpers";
 import moment from "moment";
 import Spinner from "./../components/Spinner";
 import BarCharts from "./../components/BarCharts";
-import records from "./../apis/records";
 
 export default {
   name: "Charts",
@@ -237,15 +235,8 @@ export default {
   height: 100%;
   overflow-y: scroll;
 }
-.scrollbar {
-  padding-left: 6px;
-}
-.scrollbar::-webkit-scrollbar {
-  width: 6px;
-}
-.scrollbar::-webkit-scrollbar-thumb {
-  border-radius: 3px;
-  background-color: rgba(0, 0, 0, 0.1);
+.container::-webkit-scrollbar {
+  display: none;
 }
 th,
 td {

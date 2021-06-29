@@ -36,6 +36,16 @@ export default {
     delete({ id }) {
       return apiHelper.delete(`/admin/compositions/${id}`)
     }
+  },
+  getRecords({ year, month, ingredientId, authorId }) {
+    const searchParams = new URLSearchParams({ year, month, ingredientId, authorId })
+    return apiHelper.get(`/admin/records?${searchParams.toString()}`)
+
+  },
+  users: {
+    get() {
+      return apiHelper(`/admin/users`)
+    }
   }
 
 }
