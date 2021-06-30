@@ -59,6 +59,12 @@ const router = new Router({
       beforeEnter: authorizeIsAdmin
     },
     {
+      path: '/admin/users/new',
+      name: 'admin-users-new',
+      component: () => import('../views/AdminNewUser.vue'),
+      beforeEnter: authorizeIsAdmin
+    },
+    {
       path: '/admin/data',
       name: 'admin-data',
       component: () => import('../views/AdminData.vue'),

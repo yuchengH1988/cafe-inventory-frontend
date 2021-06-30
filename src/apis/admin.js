@@ -52,6 +52,9 @@ export default {
     delete({ id }) {
       return apiHelper.delete(`/admin/users/${id}`)
     },
+    create({ formData }) {
+      return apiHelper.post(`/admin/users`, formData)
+    }
   }
 
 }
